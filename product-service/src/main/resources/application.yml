@@ -1,0 +1,11 @@
+server:
+  port: 8091
+spring:
+  data:
+    mongodb:
+      embedded:
+        version: 3.6.2
+      database: productdb
+      host: localhost
+      port: 27017
+
