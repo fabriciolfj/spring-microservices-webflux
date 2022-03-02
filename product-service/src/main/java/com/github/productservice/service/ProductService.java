@@ -4,6 +4,7 @@ import com.github.productservice.dto.ProductDTO;
 import com.github.productservice.repository.ProductRepository;
 import com.github.productservice.util.EntityDTOUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Range;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -13,6 +14,11 @@ import reactor.core.publisher.Mono;
 public class ProductService {
 
     private final ProductRepository repository;
+
+    public Flux<ProductDTO> getProductByPriceRange(final int min, final int max) {
+        return repository.findByPriceBetween(Range.closed(min, max))
+                .map(EntityDTOUtil::toDto);
+    }
 
     public Flux<ProductDTO> getAll() {
         return this.repository.findAll()

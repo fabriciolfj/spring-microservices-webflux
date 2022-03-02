@@ -22,6 +22,12 @@ public class ProductController {
         return productService.getAll();
     }
 
+    @GetMapping("/price-range")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Flux<ProductDTO> getBetweenPrice(@RequestParam("min") int min, @RequestParam("max") int max) {
+        return productService.getProductByPriceRange(min, max);
+    }
+
     @GetMapping("/{id}")
     public Mono<ResponseEntity<ProductDTO>> findById(@PathVariable("id") final String id) {
         return productService.getProductById(id)
