@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/transaction")
+@RequestMapping("/api/v1/users/transaction")
 public class TransactionController {
 
     private final TransactionService transactionService;
