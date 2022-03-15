@@ -13,4 +13,9 @@ public class RequestContext {
     public RequestContext(PurchaseOrderRequestDto purchaseOrderRequestDto) {
         this.purchaseOrderRequestDto = purchaseOrderRequestDto;
     }
+
+    public OrderStatus getStatus() {
+        final TransactionStatus status = transactionResponseDto.getStatus();
+        return status.equals(TransactionStatus.APPROVED) ? OrderStatus.COMPLETED : OrderStatus.FAILED;
+    }
 }

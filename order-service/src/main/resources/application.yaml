@@ -3,6 +3,8 @@ spring:
     name: order-service
   datasource:
     url: jdbc:h2:mem:test
+  jpa:
+    show-sql: true
 
 
 product.service.url: http://localhost:8091/api/v1/products/
