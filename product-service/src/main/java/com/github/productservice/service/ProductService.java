@@ -8,12 +8,14 @@ import org.springframework.data.domain.Range;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Sinks;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository repository;
+    private final Sinks.Many<ProductDTO> sink;
 
     public Flux<ProductDTO> getProductByPriceRange(final int min, final int max) {
         return repository.findByPriceBetween(Range.closed(min, max))
@@ -33,7 +35,8 @@ public class ProductService {
     public Mono<ProductDTO> insertProduct(final Mono<ProductDTO> dto) {
         return dto.map(EntityDTOUtil::toEntity)
                 .flatMap(repository::save)
-                .map(EntityDTOUtil::toDto);
+                .map(EntityDTOUtil::toDto)
+                .doOnNext(sink::tryEmitNext);
     }
 
     public Mono<ProductDTO> updateProduct(final Mono<ProductDTO> dtoMono, final String id) {
